@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tatar_hack/screens/welcome/indroductory_test_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   @override
@@ -49,7 +50,7 @@ class WelcomeScreenBody extends StatelessWidget {
               SizedBox(
                 height: 10.h,
               ),
-              okBtn(),
+              okBtn(context),
             ],
           ),
         ),
@@ -89,7 +90,7 @@ class WelcomeScreenBody extends StatelessWidget {
     );
   }
 
-  Widget okBtn() {
+  Widget okBtn(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         primary: Color(0xFF38A042),
@@ -101,7 +102,13 @@ class WelcomeScreenBody extends StatelessWidget {
           borderRadius: BorderRadius.circular(32.r),
         ),
       ),
-      onPressed: () {},
+      onPressed: () {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => IntroductoryTestScreen(),
+          ),
+        );
+      },
       child: Text(
         'OK',
         style: TextStyle(

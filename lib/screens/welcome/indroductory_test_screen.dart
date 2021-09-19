@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 import 'package:tatar_hack/provider/question_provider.dart';
+import 'package:tatar_hack/screens/test/categories_screen.dart';
+import 'package:tatar_hack/widgets/appbar/app_bar_with_profile.dart';
 
 class IntroductoryTestScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: introductoryTestAppbar(),
+      appBar: CustomAppbar.appBarWithoutProfile(context),
       body: IntroductoryTestBody(),
     );
-  }
-
-  introductoryTestAppbar() {
-    return AppBar();
   }
 }
 
@@ -23,7 +20,7 @@ class IntroductoryTestBody extends StatefulWidget {
 }
 
 class _IntroductoryTestBodyState extends State<IntroductoryTestBody> {
-  int val = 1;
+  bool isNeedOpenDialog = false;
 
   @override
   Widget build(BuildContext context) {
@@ -44,9 +41,15 @@ class _IntroductoryTestBodyState extends State<IntroductoryTestBody> {
                   borderRadius: BorderRadius.circular(32.r),
                 ),
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => CategoriesScreen(),
+                  ),
+                );
+              },
               child: Text(
-                'OK',
+                'Дальше',
                 style: TextStyle(
                   shadows: <Shadow>[
                     Shadow(
@@ -65,6 +68,9 @@ class _IntroductoryTestBodyState extends State<IntroductoryTestBody> {
   }
 
   Widget testQuestionsList(BuildContext context) {
+    List<TestItem> testList = [];
+    int questionsTappingCounter = 0;
+
     final List<TestQuestion> testQuestions = [
       TestQuestion(
         question: 'Рәхим итегез',
@@ -74,6 +80,7 @@ class _IntroductoryTestBodyState extends State<IntroductoryTestBody> {
           'Привет',
         ],
         rightAnswer: 1,
+        isNeedOpenDialog: false,
       ),
       TestQuestion(
         question: 'Сау булыгыз',
@@ -83,6 +90,7 @@ class _IntroductoryTestBodyState extends State<IntroductoryTestBody> {
           'Здравствуйте',
         ],
         rightAnswer: 3,
+        isNeedOpenDialog: false,
       ),
       TestQuestion(
         question: 'Алма',
@@ -92,6 +100,7 @@ class _IntroductoryTestBodyState extends State<IntroductoryTestBody> {
           'Здравствуйте',
         ],
         rightAnswer: 2,
+        isNeedOpenDialog: true,
       ),
       TestQuestion(
         question: 'Ишәк',
@@ -101,6 +110,7 @@ class _IntroductoryTestBodyState extends State<IntroductoryTestBody> {
           'Осел',
         ],
         rightAnswer: 3,
+        isNeedOpenDialog: false,
       ),
       TestQuestion(
         question: 'Мөрәҗәгать',
@@ -110,6 +120,7 @@ class _IntroductoryTestBodyState extends State<IntroductoryTestBody> {
           'Рай',
         ],
         rightAnswer: 1,
+        isNeedOpenDialog: false,
       ),
       TestQuestion(
         question: 'Су',
@@ -119,6 +130,7 @@ class _IntroductoryTestBodyState extends State<IntroductoryTestBody> {
           'Сучок',
         ],
         rightAnswer: 1,
+        isNeedOpenDialog: true,
       ),
       TestQuestion(
         question: 'Табигать',
@@ -128,6 +140,7 @@ class _IntroductoryTestBodyState extends State<IntroductoryTestBody> {
           'Природа',
         ],
         rightAnswer: 3,
+        isNeedOpenDialog: false,
       ),
       TestQuestion(
         question: 'Иҗтимагый',
@@ -137,6 +150,7 @@ class _IntroductoryTestBodyState extends State<IntroductoryTestBody> {
           'Редкий',
         ],
         rightAnswer: 2,
+        isNeedOpenDialog: false,
       ),
       TestQuestion(
         question: 'Сәхнә',
@@ -146,6 +160,7 @@ class _IntroductoryTestBodyState extends State<IntroductoryTestBody> {
           'Сцена',
         ],
         rightAnswer: 3,
+        isNeedOpenDialog: true,
       ),
       TestQuestion(
         question: 'Мөнәсәбәт',
@@ -155,6 +170,7 @@ class _IntroductoryTestBodyState extends State<IntroductoryTestBody> {
           'Злость',
         ],
         rightAnswer: 1,
+        isNeedOpenDialog: false,
       ),
       TestQuestion(
         question: 'Мөмкинчелек',
@@ -164,6 +180,7 @@ class _IntroductoryTestBodyState extends State<IntroductoryTestBody> {
           'Сцена',
         ],
         rightAnswer: 1,
+        isNeedOpenDialog: false,
       ),
       TestQuestion(
         question: 'Васыять',
@@ -173,6 +190,7 @@ class _IntroductoryTestBodyState extends State<IntroductoryTestBody> {
           'Просвет',
         ],
         rightAnswer: 2,
+        isNeedOpenDialog: true,
       ),
       TestQuestion(
         question: 'Тәртипсез',
@@ -182,6 +200,7 @@ class _IntroductoryTestBodyState extends State<IntroductoryTestBody> {
           'Невоспитанный',
         ],
         rightAnswer: 3,
+        isNeedOpenDialog: false,
       ),
       TestQuestion(
         question: 'Суыткыч',
@@ -191,6 +210,7 @@ class _IntroductoryTestBodyState extends State<IntroductoryTestBody> {
           'Холодильник',
         ],
         rightAnswer: 3,
+        isNeedOpenDialog: false,
       ),
       TestQuestion(
         question: 'Сихер',
@@ -200,6 +220,7 @@ class _IntroductoryTestBodyState extends State<IntroductoryTestBody> {
           'Рыба',
         ],
         rightAnswer: 1,
+        isNeedOpenDialog: true,
       ),
       TestQuestion(
         question: 'Эт',
@@ -209,29 +230,13 @@ class _IntroductoryTestBodyState extends State<IntroductoryTestBody> {
           'Медведь',
         ],
         rightAnswer: 1,
+        isNeedOpenDialog: false,
       ),
     ];
-
-    List<TestItem> testList = [];
-
-    bool questionStatus;
-    int questionsTappingCounter = 0;
 
     for (int i = 0; i < testQuestions.length; i++) {
       testList.add(TestItem(
         testText: testQuestions[i].question,
-        onPressed: () {
-          questionsTappingCounter++;
-
-          if (questionsTappingCounter % 3 == 0) {
-            openShipmentObjectsDialog(context, testQuestions[i]);
-            questionsTappingCounter++;
-          } else {
-            questionsTappingCounter++;
-          }
-        },
-        questionStatus: Provider.of<QuestionProvider>(context, listen: true)
-            .isRightAnswered,
       ));
     }
 
@@ -239,21 +244,10 @@ class _IntroductoryTestBodyState extends State<IntroductoryTestBody> {
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
-          return ListTile(
-            onTap: testList[index].onPressed,
-            title: Text(
-              testList[index].testText,
-              style: TextStyle(
-                fontSize: 14.sp,
-                fontWeight: FontWeight.bold,
-                color: Color(
-                  0xFF006C52,
-                ),
-              ),
-            ),
-            leading: testList[index].questionStatus
-                ? questionIsAnsweredIcon()
-                : questionIsUnansweredIcon(),
+          return TestQuestionTile(
+            testListItem: testList[index],
+            testQuestionItem: testQuestions[index],
+            isNeedOpenDialog: testQuestions[index].isNeedOpenDialog,
           );
         },
         separatorBuilder: (BuildContext context, int index) => Divider(
@@ -261,6 +255,83 @@ class _IntroductoryTestBodyState extends State<IntroductoryTestBody> {
               thickness: 1.5,
             ),
         itemCount: testList.length);
+  }
+
+  testQuestionStatusImage(String image) {
+    return Container(
+      width: 21.w,
+      height: 21.w,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(image),
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
+  }
+}
+
+class TestQuestionTile extends StatefulWidget {
+  final TestItem testListItem;
+  final TestQuestion testQuestionItem;
+  final bool isNeedOpenDialog;
+
+  TestQuestionTile(
+      {required this.testListItem,
+      required this.testQuestionItem,
+      required this.isNeedOpenDialog});
+
+  @override
+  _TestQuestionTileState createState() => _TestQuestionTileState();
+}
+
+class _TestQuestionTileState extends State<TestQuestionTile> {
+  bool isRightAnswered = false;
+  int questionsTappingCounter = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      onTap: () {
+        questionsTappingCounter++;
+
+        if (widget.isNeedOpenDialog) {
+          openShipmentObjectsDialog(context, widget.testQuestionItem);
+        } else {
+          setState(() {
+            isRightAnswered = true;
+          });
+        }
+      },
+      title: Text(
+        widget.testListItem.testText,
+        style: TextStyle(
+          fontSize: 14.sp,
+          fontWeight: FontWeight.bold,
+          color: Color(
+            0xFF006C52,
+          ),
+        ),
+      ),
+      leading: isRightAnswered
+          ? questionIsAnsweredIcon()
+          : questionIsUnansweredIcon(),
+    );
+  }
+
+  openShipmentObjectsDialog(BuildContext context, TestQuestion testQuestion) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return ShipmentObjectDialog(
+            testQuestion: testQuestion,
+            onChange: () {
+              setState(() {
+                isRightAnswered = true;
+              });
+            },
+          );
+        });
   }
 
   questionIsAnsweredIcon() {
@@ -282,42 +353,19 @@ class _IntroductoryTestBodyState extends State<IntroductoryTestBody> {
               image: AssetImage('assets/images/unanswered_test_question.png'))),
     );
   }
-
-  openShipmentObjectsDialog(BuildContext context, TestQuestion testQuestion) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return ShipmentObjectDialog(
-            testQuestion: testQuestion,
-          );
-        });
-  }
-
-  testQuestionStatusImage(String image) {
-    return Container(
-      width: 21.w,
-      height: 21.w,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage(image),
-          fit: BoxFit.cover,
-        ),
-      ),
-    );
-  }
 }
 
 class ShipmentObjectDialog extends StatefulWidget {
   final TestQuestion testQuestion;
+  final VoidCallback onChange;
 
-  ShipmentObjectDialog({required this.testQuestion});
+  ShipmentObjectDialog({required this.testQuestion, required this.onChange});
 
   @override
   _ShipmentObjectDialogState createState() => _ShipmentObjectDialogState();
 }
 
 class _ShipmentObjectDialogState extends State<ShipmentObjectDialog> {
-  bool _value = false;
   int val = -1;
 
   @override
@@ -382,8 +430,7 @@ class _ShipmentObjectDialogState extends State<ShipmentObjectDialog> {
               groupValue: val,
               onChanged: (value) {
                 if (value == widget.testQuestion.rightAnswer) {
-                  Provider.of<QuestionProvider>(context, listen: false)
-                      .rightAnswered();
+                  widget.onChange();
                 }
                 setState(() {
                   if (value is int) {
@@ -408,6 +455,9 @@ class _ShipmentObjectDialogState extends State<ShipmentObjectDialog> {
               value: 2,
               groupValue: val,
               onChanged: (value) {
+                if (value == widget.testQuestion.rightAnswer) {
+                  widget.onChange();
+                }
                 setState(() {
                   if (value is int) {
                     val = value;
@@ -431,6 +481,9 @@ class _ShipmentObjectDialogState extends State<ShipmentObjectDialog> {
               value: 3,
               groupValue: val,
               onChanged: (value) {
+                if (value == widget.testQuestion.rightAnswer) {
+                  widget.onChange();
+                }
                 setState(() {
                   if (value is int) {
                     val = value;
@@ -454,13 +507,9 @@ class _ShipmentObjectDialogState extends State<ShipmentObjectDialog> {
 
 class TestItem {
   final String testText;
-  final VoidCallback onPressed;
-  final bool questionStatus;
 
   TestItem({
     required this.testText,
-    required this.onPressed,
-    required this.questionStatus,
   });
 }
 
@@ -468,10 +517,12 @@ class TestQuestion {
   final String question;
   final List<String> answers;
   final int rightAnswer;
+  final bool isNeedOpenDialog;
 
   TestQuestion({
     required this.question,
     required this.answers,
     required this.rightAnswer,
+    required this.isNeedOpenDialog,
   });
 }

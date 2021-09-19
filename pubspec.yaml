@@ -52,6 +52,29 @@ flutter:
     - assets/images/message_icon.png
     - assets/images/answered_test_question.png
     - assets/images/unanswered_test_question.png
+    - assets/images/like_icon.png
+    - assets/images/dislike_icon.png
+    - assets/images/big_dislike_icon.png
+    - assets/images/big_like_icon.png
+    - assets/images/tale_image.png
+    - assets/images/pharmacy_image.png
+    - assets/images/voice_icon.png
+    - assets/images/info_icon.png
+    - assets/images/all_selected.png
+    - assets/images/all_unselected.png
+    - assets/images/translate_selected.png
+    - assets/images/reading_selected.png
+    - assets/images/listening_selected.png
+    - assets/images/triangle.png
+    - assets/images/shop.png
+    - assets/images/bus_stop.png
+    - assets/images/listen_icon.png
+    - assets/images/record_icon.png
+    - assets/images/sound_playback.png
+    - assets/images/lesson_result_image.png
+    - assets/images/checked.png
+    - assets/images/user_photo.png
+    - assets/images/syuyumbike_small.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
